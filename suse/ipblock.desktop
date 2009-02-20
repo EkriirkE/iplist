@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+#Encoding=UTF-8
+Name=IPblock
+Comment=IP Blocker
+Categories=System;Monitor;GTK;System;Network;
+TryExec=gnomesu
+Exec=gnomesu /usr/sbin/ipblock gui
+Icon=ipblock
+Terminal=false
+Type=Application
+X-SuSE-Translate=no
+

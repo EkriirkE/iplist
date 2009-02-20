@@ -1,0 +1,6 @@
+ipblock.conf etc/
+ipblock.lists etc/
+debian/99ipblock etc/network/if-up.d/
+ipblock.desktop usr/share/applications/
+ipblock.png	usr/share/pixmaps/
+allow.p2p var/cache/iplist/

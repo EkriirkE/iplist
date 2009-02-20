@@ -1,0 +1,472 @@
+#!/bin/sh
+#
+#	ipblock - front-end for iplist
+#	Copyright (C) 2009 Serkan Sakar <uljanow@users.sourceforge.net>
+#
+#	This program is free software; you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation; either version 2 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program; if not, write to the Free Software
+#	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  
+#	02110-1301, USA
+# 
+
+[ -z "$DEBUG" ] || set -x
+set -e
+set -u
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+VERSION="0.25"
+
+QUEUE=0xff
+QUEUE_INPUT=0xfd
+QUEUE_OUTPUT=0xfe
+QUEUE_FORWARD=0xff
+
+POLICY=REPEAT
+POLICY_MARK=0xfffe
+
+BLOCK_TARGET=REPEAT
+BLOCK_TARGET_INPUT=DROP
+BLOCK_TARGET_OUTPUT=REPEAT
+BLOCK_TARGET_FORWARD=REPEAT
+
+BLOCK_TARGET_MARK=0xffff
+
+NICE=-5
+NEW="-m state --state NEW"
+
+GUI_LOG_FILE="/tmp/ipblockUI.log"
+
+[ -f /etc/ipblock.conf ] && . /etc/ipblock.conf
+
+export IPLIST_LISTDIR
+export http_proxy
+
+on_start_failure()
+{
+  logger -s -t "ipblock[$$]" "error: failed to start, cleaning up"
+  do_stop
+}
+
+is_running()
+{
+	local ret=0
+
+	iptables -L -n | grep -E "_MATCH|_QUEUE" > /dev/null 2>&1 && ret=2
+	pkill -SIGUSR1 iplist && ret=$(($ret + 3))
+
+	return $ret
+}
+
+check_stamp()
+{
+	local stamp now delta interval
+
+	case "$UPDATE_INTERVAL" in
+	0|"")
+		return 2;;
+	esac
+
+	[ -f $UPDATE_STAMP ] || return 0
+
+	stamp=$(stat --format=%Y ${UPDATE_STAMP})
+	now=$(date +%s)
+
+	delta=$(($now-$stamp))
+	interval=$(($UPDATE_INTERVAL*60*60*24))
+
+	[ $delta -ge $interval ] && return 0
+
+	return 2
+}
+
+show_version()
+{
+	echo "\
+IPblock $VERSION
+Copyright (C) 2009 Serkan Sakar <uljanow@users.sourceforge.net>"
+}
+
+show_usage()
+{
+	show_version
+	echo "\
+
+Usage: $(basename $0) [options]
+
+Options:
+ -s	start blocking
+ -d	stop blocking
+ -r	restart IPblock
+ -i	restart iptables rules
+ -p	restart iplist
+ -u	update lists
+ -c	convert lists to ipl format
+ -g	start IPblock GUI
+ -l	show status
+ -v	show version and exit
+ -h	show this help"
+}
+
+update_file()
+{
+	local url file list
+	list=$(basename $1)
+	
+	grep '^[^#]' ${URL_FILE} | \
+	while read file url; do
+		if [ "$file" = "$list" ]; then
+			wget -U "IPblock/$VERSION" -t 2 -T 60 -w 1 -a ${LOG_FILE} -nv -N ${url} || \
+			logger -s -t "ipblock[$$]" "error: update of $file failed"
+			break
+		fi
+	done
+}
+
+convert_file()
+{
+	iplist ${VERBOSE} -o $1 $1
+}
+
+start_iplist()
+{
+	nice -n ${NICE} iplist --daemon ${VERBOSE} -f ${LOG_FILE} -l ${LOG_LEVEL}
+	sleep 1
+
+	case "$LESS_MEMORY" in
+	[Nn]*|"")
+		for chain in ${IPTABLES_CHAIN_BLOCK}; do
+			iplist -i -p ${POLICY} -P ${POLICY_MARK} \
+			-t $(eval echo \$BLOCK_TARGET_${chain}) \
+			-T ${BLOCK_TARGET_MARK} -n $(eval echo \$QUEUE_${chain}) \
+			${BLOCK_LIST} $(eval echo \$BLOCK_LIST_${chain})
+		done
+		;;
+	*)
+		iplist -i -p ${POLICY} -P ${POLICY_MARK} -t ${BLOCK_TARGET} \
+		-T ${BLOCK_TARGET_MARK} -n ${QUEUE} ${BLOCK_LIST}
+		;;
+	esac
+}
+
+stop_iplist()
+{
+	iplist -k 2>/dev/null || true
+}
+
+insert_rules()
+{
+	iptables -N BLOCK_MATCH
+	iptables -N ALLOW_MATCH
+
+	[ "$LOG_IPTABLES" -eq "0" ] || {
+		iptables -A BLOCK_MATCH -j LOG --log-prefix "BLOCKED: "
+		iptables -A ALLOW_MATCH -j LOG --log-prefix "ALLOWED: "
+	}
+
+	iptables -A BLOCK_MATCH -p tcp -j REJECT --reject-with tcp-reset
+	iptables -A BLOCK_MATCH -j REJECT --reject-with icmp-port-unreachable
+	iptables -A ALLOW_MATCH -j ACCEPT
+
+	cd "$IPLIST_LISTDIR"
+
+	# FIXME: find out why suse11 and fc9 doesn't load iprange module
+	[ -f /etc/fedora-release ] && modprobe -q xt_iprange
+	[ -f /etc/SuSE-release ] && modprobe -q xt_iprange
+
+	for chain in ${IPTABLES_CHAIN_BLOCK}; do
+		iptables -N ${chain}_QUEUE
+
+		for port in $(eval echo \$IGN_TCP_${chain}); do
+			iptables -A ${chain}_QUEUE -p tcp --dport ${port} -j RETURN
+		done
+		for port in $(eval echo \$IGN_UDP_${chain}); do
+			iptables -A ${chain}_QUEUE -p udp --dport ${port} -j RETURN
+		done
+	
+		for proto in $(eval echo \$IGN_PROTO_${chain}); do
+			iptables -A ${chain}_QUEUE -p ${proto} -j RETURN
+		done
+
+		touch ${GUI_WHITELIST_PERM}
+		touch ${GUI_WHITELIST_TEMP}
+
+		echo ${IPTABLES_CHAIN_ALLOW} | grep -q ${chain} && \
+		case "$chain" in
+		INPUT)
+			for range in $(zcat -fq ${ALLOW_LIST} ${ALLOW_LIST_INPUT} /dev/null | \
+					sed 's/[ \t]*//g' | grep -o -E "([0-9.]+){4}[-]([0-9.]+){4}"); do
+				iptables -A ${chain}_QUEUE -m iprange --src-range ${range} -j ALLOW_MATCH
+			done
+			;;
+		OUTPUT)
+			for range in $(zcat -fq ${ALLOW_LIST} ${ALLOW_LIST_OUTPUT} /dev/null | \
+					sed 's/[ \t]*//g' | grep -o -E "([0-9.]+){4}[-]([0-9.]+){4}"); do
+				iptables -A ${chain}_QUEUE -m iprange --dst-range ${range} -j ALLOW_MATCH
+			done
+			;;
+		FORWARD)
+			for range in $(zcat -fq ${ALLOW_LIST} ${ALLOW_LIST_FORWARD} /dev/null | \
+					sed 's/[ \t]*//g' | grep -o -E "([0-9.]+){4}[-]([0-9.]+){4}"); do
+				iptables -A ${chain}_QUEUE -m iprange --src-range ${range} -j ALLOW_MATCH
+				iptables -A ${chain}_QUEUE -m iprange --dst-range ${range} -j ALLOW_MATCH
+			done
+			;;
+		esac
+
+		iptables -A ${chain}_QUEUE -j NFQUEUE --queue-num $(eval echo \$QUEUE_${chain})
+
+		iptables -I ${chain} 1 -m mark --mark ${BLOCK_TARGET_MARK} -j BLOCK_MATCH
+		iptables -I ${chain} 2 ${NEW} -m mark ! --mark ${POLICY_MARK} -j ${chain}_QUEUE
+	done
+}
+
+delete_rules()
+{
+	set +e
+
+	local filter_chains="INPUT OUTPUT FORWARD"
+
+	for chain in ${filter_chains}; do
+		iptables -D ${chain} -m mark --mark ${BLOCK_TARGET_MARK} -j BLOCK_MATCH
+		iptables -D ${chain} ${NEW} -m mark ! --mark ${POLICY_MARK} -j ${chain}_QUEUE
+
+		iptables -F ${chain}_QUEUE
+		iptables -X ${chain}_QUEUE
+	done
+
+	iptables -F ALLOW_MATCH
+	iptables -X ALLOW_MATCH
+
+	iptables -F BLOCK_MATCH
+	iptables -X BLOCK_MATCH
+
+	set -e
+
+} 2>/dev/null
+
+do_start()
+{
+	if is_running; then
+		trap on_start_failure INT TERM EXIT
+		start_iplist
+		insert_rules
+		trap - INT TERM EXIT
+	else
+		do_restart
+	fi
+}
+
+do_stop()
+{
+	is_running || {
+		case "$?" in
+		2)
+			delete_rules
+			;;
+		3)
+			stop_iplist
+			;;
+		5)
+			delete_rules
+			stop_iplist
+			;;
+		esac
+	}
+}
+
+do_restart()
+{
+	do_stop
+	sleep 2
+	do_start
+}
+
+do_restart_rules()
+{
+	if ! is_running; then
+		delete_rules
+		insert_rules
+	else
+		exit 1
+	fi
+}
+
+do_restart_iplist()
+{
+	trap on_start_failure INT TERM EXIT
+	stop_iplist
+	sleep 2
+	start_iplist
+	trap - INT TERM EXIT
+}
+
+do_update()
+{
+	if [ -d ${IPLIST_LISTDIR} ]; then
+		cd ${IPLIST_LISTDIR}
+
+		for file in ${BLOCK_LIST}; do
+			update_file $file
+		done
+		touch ${UPDATE_STAMP}
+	else
+		logger -s -t "ipblock[$$]" "error: can't access ${IPLIST_LISTDIR}"
+		exit 1
+	fi
+}
+
+do_gui()
+{
+	exec java -jar /usr/share/java/ipblockUI.jar > ${GUI_LOG_FILE} 2>&1
+}
+
+do_status()
+{
+	if is_running; then
+		logger -s -t "ipblock[$$]" "error: IPblock is not running"
+		exit 1
+	fi
+	iplist -s
+
+	echo
+	iptables -L BLOCK_MATCH -vn
+	echo
+
+	if [ -f "$UPDATE_STAMP" ]; then
+		echo -n "Last Updated "
+		date -r "$UPDATE_STAMP"
+	fi
+	if [ -f ${LOG_FILE} ]; then
+		echo "Last log messages ($LOG_FILE):"
+		tail -n 10 ${LOG_FILE}
+	fi
+}
+
+do_convert()
+{
+	if [ -d ${IPLIST_LISTDIR} ]; then
+		cd ${IPLIST_LISTDIR}
+
+		for file in ${BLOCK_LIST}; do
+			echo -n "converting $file..."
+			convert_file $file
+			echo "done."
+		done
+	else
+		logger -s -t "ipblock[$$]" "error: can't access ${IPLIST_LISTDIR}"
+		exit 1
+	fi
+}
+
+if [ "$(id -u)" != "0" ]; then
+  logger -s -t "ipblock[$$]" "error: IPblock needs to be run as root"
+  exit 1
+fi
+
+[ "$#" -ne "0" ] || { show_usage >&2 ; exit 1; }
+
+case "$LOG_IPTABLES" in
+[Nn]*|"")
+	LOG_IPTABLES=0;;
+*)
+	LOG_IPTABLES=1;;
+esac
+
+case "$VERBOSE" in
+[Nn]*|"")
+	VERBOSE="-q";;
+*)
+	VERBOSE="-v";;
+esac
+
+while getopts "sdripucglvh" opt; do
+	case "$opt" in
+	s) 
+		do_start
+		;;
+	d)
+		do_stop
+		;;
+	r)
+		do_restart
+		;; 
+	i)
+		do_restart_rules	
+		;;
+	p)
+		do_restart_iplist
+		;;
+	u)
+		do_update
+		;;
+	c)
+		do_convert
+		;;
+	g)
+		do_gui
+		;;
+	l)
+		do_status
+		;; 
+	v)
+		show_version && exit 0
+		;;
+	h)
+		show_usage && exit 0
+		;;
+	\?|*)
+		show_usage >&2 && exit 1
+		;;
+	esac
+done
+
+[ "$OPTIND" -gt "$#" ] && exit 0
+
+shift $(($OPTIND - 1))
+
+case "$1" in
+start)
+	$0 -s
+	;;
+stop)
+	$0 -d
+	;;
+restart|reload)
+	$0 -r
+	;; 
+update)
+	$0 -u
+	;;
+convert)
+	$0 -c
+	;;
+status)
+	$0 -l
+	;; 
+gui)
+	$0 -g
+	;; 
+is_running|check_stamp)
+	$1
+	;;
+*)
+	show_usage >&2 && exit 1
+	;;
+esac
+
+exit 0
+
+# vim:filetype=sh
+# vim:foldmethod=indent
+

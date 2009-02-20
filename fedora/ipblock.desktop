@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+#Encoding=UTF-8
+Name=IPblock
+Comment=IP Blocker
+Categories=Network;
+TryExec=/usr/bin/ipblock
+Exec=/usr/bin/ipblock -g
+Icon=ipblock
+Terminal=false
+Type=Application

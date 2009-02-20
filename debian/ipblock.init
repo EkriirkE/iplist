@@ -1,0 +1,58 @@
+#!/bin/sh
+# Author: Serkan Sakar <uljanow@users.sourceforge.net>
+#
+# chkconfig: 2345 99 00
+#
+### BEGIN INIT INFO
+# Provides:          ipblock
+# Required-Start:    $local_fs $network $syslog
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: ipblock initscript
+# Description:       Start ipblock at boot time if AUTOSTART is set
+#                    in /etc/ipblock.conf
+### END INIT INFO
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="IP blocker daemon"
+SCRIPTNAME=/etc/init.d/ipblock
+
+[ -x /usr/sbin/ipblock ] || exit 0
+[ -f /etc/ipblock.conf ] && . /etc/ipblock.conf
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+case "$AUTOSTART" in
+[Nn]*|"")
+	exit 0
+	;;
+esac
+
+case "$1" in
+start)
+	log_daemon_msg "Starting $DESC" "ipblock"
+	ipblock -s &
+	log_end_msg $?
+	;;
+stop)
+	log_daemon_msg "Stopping $DESC" "ipblock"
+	ipblock -d &
+	log_end_msg $?
+	;;
+restart|reload|force-reload)
+	log_daemon_msg "Restarting $DESC" "ipblock"
+	ipblock -r &
+	log_end_msg $?
+	;;
+status)
+	ipblock -l
+	;;
+*)
+	echo "Usage: $SCRIPTNAME {start|stop|restart|reload|force-reload|status}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

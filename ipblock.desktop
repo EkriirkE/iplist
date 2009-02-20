@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+#Encoding=UTF-8
+Name=IPblock
+Comment=IP Blocker
+Categories=Network;
+TryExec=gksu
+Exec=gksu "/usr/sbin/ipblock gui"
+Icon=ipblock
+Terminal=false
+Type=Application

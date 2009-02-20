@@ -1,0 +1,32 @@
+#!/sbin/runscript
+# Copyright 1999-2008 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+        need net
+        use logger
+}
+
+checkconfig() {
+	[ -x /usr/sbin/ipblock ] && [ -f /etc/ipblock.conf ] && [ -f /etc/ipblock.lists ] && return
+	eerror "Can't locate ipblock files"
+
+	return 1
+}
+
+start() {
+	checkconfig || return 1
+	ebegin "Starting ipblock"
+
+	ipblock -s &
+	eend ${?}
+}
+
+stop() {
+	checkconfig || return 1
+	ebegin "Stopping ipblock"
+
+	ipblock -d &
+	eend ${?}
+}

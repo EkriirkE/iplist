@@ -1,0 +1,6 @@
+iplist (0.25-0ubuntu1) intrepid; urgency=low
+
+  * Initial release. (LP: #294838)
+
+ -- Serkan Sakar <uljanow@users.sourceforge.net>  Fri, 12 Sep 2008 16:31:33 +0200
+

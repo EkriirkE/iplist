@@ -1,0 +1,44 @@
+To compile iplist g++ version 4 or later is required.
+The following  dev-packages are needed:
+
+ * g++
+ * libnetfilter-queue-dev
+ * zlib1g-dev
+
+These names refer to packages found on Debian based systems.
+On Fedora the names are:
+
+ * gcc-c++
+ * libnetfilter_queue-devel 
+ * zlib-devel 
+
+To build iplist run
+
+$ tar fxz iplist-<version>.tar.gz
+$ cd iplist*
+$ make
+
+To build ipblockUI.jar Netbeans is required.
+
+This iplist source tarball comes with a debian directory
+that allows to build Debian or Ubuntu Packages. The install
+target in the Makefile is already set to DESTDIR.
+
+To build a deb package after having installed debhelper, fakeroot
+and the above dev-packages:
+
+$ tar fxz iplist-<version>.tar.gz
+$ cd iplist*
+$ make deb
+
+To build Fedora Core or OpenSuSE packages copy the source tarball to 
+/usr/src/*/SOURCES and use the iplist.spec file which
+is in the source tree.
+
+# cp iplist-<version>.tar.gz /usr/src/*/SOURCES
+# rpmbuild -ba iplist.spec
+
+The build rpm and source rpm are located in 
+/usr/src/*/RPMS/<arch> and
+/usr/src/*/SRPMS/, respectively.
+

@@ -1,0 +1,176 @@
+2009-02-19  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.25)
+	* fixed gzip error message
+	* moved icon to /usr/share/pixmaps/
+	* removed "-u root" parameter in desktop file
+	* added gentoo init script
+	* fixed linux mint menu starter issue
+	* fixed OpenSuse 11.1 rpm-lint errors
+	* fixed format of range names in logfile
+	* added if-up script (Debian)
+	* fixed GUI problem in Arch Linux
+	* whitelisted ranges allow incoming traffic (default setting)
+	* added -p option to restart iplist only (used by ipblock.cron)
+	* removed update IP ranges in allow.p2p due to default http whitelist
+
+2008-11-30  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.24)
+	* enabled busyIcon of the GUI
+	* fixed compiler warnings 
+	* fixed lintian error due to force-reload
+	* added IGN_PROTO_* options to ignore protocols
+	* changed Debian java dependency to java6-runtime
+	* fixed opensuse autostart issues
+	* added new whitelist manager
+	* added context menu to allow logged IPs
+	* added LESS_MEMORY option and compiler flag
+	* renamed option to GUI_START_HIDDEN
+	* added GUI_THEME option
+	* added GUI_WHITELIST_* options
+	* added log column Type
+	* added -i parameter to ipblock
+	* added automatical restart to list manager
+	* added online help menuitem
+
+2008-10-18  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.23)
+	* new GUI with native look & feel in GNOME
+	* added systray support (only Metacity currently)
+	* added new ipblock icon
+	* added GUI logfile 
+	* added GUI_START_MINIMIZED option
+	* added GUI_LAST_LOG_LINES option
+	* added GUI_AUTOSCROLL option
+	* http and domain ports are enabled in OUTPUT by default
+	* added Mandriva Linux 2009 support
+
+2008-10-04  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.22)
+	* added BLOCK_TARGET_* options and set the default 
+	  action for incoming blocked packets to DROP
+	* modified GUI log entries
+	* fixed new GUI logging bug
+
+2008-09-14  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.21)
+	* added BLOCK_LIST_*, ALLOW_LIST_* and 
+	  IPTABLES_CHAIN_ALLOW options
+	* modified GUI to show the last 12 log entries
+	* allow lists can optionally be compressed with gzip
+	* extended LOG_IPTABLES feature to show allowed packets
+	* Update messages are appended to logfile
+	* added Update dialog for adding lists from URL 
+	* default allow list is only valid in the output chain
+	* added more countries (e.g. russia, india) 
+	* improved GUI cleanup
+
+2008-07-29  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.20)
+	* fixed gcc-4.3 compiling issues
+	* added menu starter for fedora
+	* moved README.lists to /etc/ipblock.lists
+	* added import URL feature in GUI
+	* added OpenSuSE 11 support
+
+2008-01-25  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.19)
+	* removed IANA Private IP addresses from allow.p2p
+
+2007-12-30  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.18)
+	* made init scripts more distribution specific 
+	* added ALLOW_LIST option
+	* changed URL list format
+	* integrated country lists
+
+2007-12-22  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.17)
+	* fixed bug 1852759 (thanks to ekimregnirps)
+	* improved cleanup of iptables rules
+	* resolved conflict between using GUI and CLI
+	* added cron job to auto-update lists
+	* added AUTOSTART option and init script
+	* minor GUI layout changes
+
+2007-12-8  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.16)
+	* minor GUI bugfixes 
+	* improved robustness of IPblock
+	* starting IPblock takes less time
+	* changed max files per queue to 32
+	* iplist doesn't terminate on unsupported file types
+	* minor changes to logging
+	* added IPTABLES_CHAIN option
+	* added IPTABLES_LOG option
+	* added http_proxy option
+	* added DEBUG switch
+
+2007-10-11  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.15.1)
+	* fixed suspend error
+	* fixed kernel 2.6.23 support
+
+2007-08-29	Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.15)
+	* fixed custom ports bug
+	* fixed wrong error message on successful start (ipblock)
+	* added "add URL" functionality
+
+2007-08-20	Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.14)
+	* added quiet option
+	* added support for value/mask marks
+	* added support for PRE- and POSTROUTING chains
+	* initial release of ipblockUI
+	* fixed compatibility issues due to mark values
+
+2007-07-13	Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.13)
+	* renamed nfqueue to iplist
+	* added output-fmt option
+	* ipblock.sh can ignore ports 
+
+2007-07-10	Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.12)
+	* improved reading/writing routines
+	* improved program responsiveness
+	* added hit-counter for logging
+	* fixed dat-format 
+	* added strict-ip option
+	* added script update facility
+	* added list dir environment variable
+
+2007-06-26	Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.11)
+	* added support to dynamically insert, delete and list
+	  queues without terminating an already running instance
+	* all files can be optionally gzip compressed
+	* reading from pipes works properly
+	* added options policy-mark and target-mark and
+	  target argument repeat
+	* removed config file support because creating 
+	  multiple jobs from cli is now possible
+	* improved program cleanup
+	* csv file format support added
+	* init script improved
+
+2007-06-13	Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* Initial Release (0.1)
+

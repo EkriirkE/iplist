@@ -1,0 +1,11 @@
+# This is an example allow list which must be in p2p format (optionally
+# compressed with gzip). It's recommended to keep the number of  entries 
+# small (e.g. 100).
+#
+# <Name> : <Start IP> - <End IP>
+# Bluetack Mirror :	130.149.17.156	- 130.149.17.156
+#
+# Warning: don't use this list for custom entries because the package 
+# manager might remove/override the changes made to this file.
+# Instead create a separate list and add it to ALLOW_LIST 
+# in /etc/ipblock.conf .

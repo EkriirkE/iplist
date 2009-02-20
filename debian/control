@@ -1,0 +1,20 @@
+Source: iplist
+Section: net
+Priority: extra
+#Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
+Maintainer: Serkan Sakar <uljanow@users.sourceforge.net>
+#XSBC-Original-Maintainer: Serkan Sakar <uljanow@users.sourceforge.net>
+Homepage: http://iplist.sourceforge.net
+Build-Depends: debhelper (>= 5.0.51~), zlib1g-dev, libnetfilter-queue-dev
+Standards-Version: 3.8.0
+
+Package: iplist
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, iptables, java6-runtime, gksu
+Conflicts: moblock
+Description: List based packet handler
+ iplist is a list based packet handler which uses
+ the netfilter netlink-queue library (kernel 2.6.14 or 
+ later). It filters by IP-address and is optimized for 
+ thousands of IP-address ranges.
+ .

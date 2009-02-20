@@ -1,0 +1,14 @@
+#!/bin/sh
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+
+[ -x /usr/sbin/ipblock ] || exit 0
+
+if ipblock check_stamp; then
+	logger -t "ipblock[cron]" "info: Updating lists"
+	PARAM="-u"
+	ipblock is_running || PARAM="-up"
+	ipblock ${PARAM} >/dev/null 2>&1
+fi
+
+exit 0

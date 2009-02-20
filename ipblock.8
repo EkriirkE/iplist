@@ -1,0 +1,60 @@
+.TH ipblock 8 "2008-10-14" "0.25" "iplist.sf.net"
+.SH NAME
+IPblock - IP blocker
+.SH SYNOPSIS
+.B ipblock
+[\fIoptions\fP]
+
+.SH DESCRIPTION
+\fBIPblock\fP is a front-end for iplist
+.SH OPTIONS
+.TP
+\fB\-s\fR
+Start blocking.
+.TP
+\fB\-d\fR
+Stop blocking.
+.TP
+\fB\-r\fR
+Restart IPblock script.
+.TP
+\fB\-u\fR
+Update lists.
+.TP
+\fB\-c\fR
+Convert lists to ipl format.
+.TP
+\fB\-g\fR
+Start IPblock GUI.
+.TP
+\fB\-l\fR
+Show status
+.TP
+\fB\-v\fR
+Show version
+.TP
+.TP
+\fB\-h\fR
+Show help.
+.PP
+\fBIPblock\fP can also be used as an init script. Allowed parameters are
+[start|stop|restart|update|convert|status].
+.SH FILES
+.TP
+/etc/ipblock.conf
+The configuration file for ipblock. This file is also used by the IPblock GUI.
+.TP
+/etc/ipblock.lists
+The configuration file of available lists.
+.SH AUTHOR
+Written by Serkan Sakar.
+.SH "REPORTING BUGS"
+Report bugs to <uljanow@users.sourceforge.net>
+or on https://sourceforge.net/tracker/?atid=966442&group_id=198679
+.SH COPYRIGHT
+Copyright \(co 2009 Serkan Sakar <uljanow@users.sourceforge.net>
+.br
+This is free software.  You may redistribute copies of it under the terms 
+of the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.
+There is NO WARRANTY, to the extent permitted by law.
+

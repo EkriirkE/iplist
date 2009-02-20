@@ -1,0 +1,183 @@
+.TH iplist 8 "2008-10-14" "0.25" "iplist.sf.net"
+.SH NAME
+iplist - List based packet handler
+.SH SYNOPSIS
+.B iplist
+[\fIoptions\fP] [\fIfile\fP...]
+.br
+.B iplist
+\fB-\-show\fR
+.br
+.B iplist
+\fB-\-kill\fR
+.br
+.B iplist
+\fB-\-delete -\-queue\-num\fR=\fI0\-65535\fR
+.SH DESCRIPTION
+\fBiplist\fP is a list based packet handler which uses 
+the netfilter netlink-queue library (kernel 2.6.14 or 
+later). It filters by IP-address and is optimized for 
+thousands of IP-address ranges.
+.SH OPTIONS
+.TP
+\fB\-p\fR, \fB\-\-policy\fR=\fBaccept\fR|\fBdrop\fR|\fBrepeat\fR
+default action for packets. This is like the iptables policy 
+setting. Packets that are repeated are send back to the source 
+chain (IN-, OUTPUT or FORWARD). Default is accept.
+.TP
+\fB\-P\fR, \fB\-\-policy-mark\fR=\fIvalue[/mask]\fR
+mark packets with a non-zero value. 
+Values can be in dec, hex (prefix 0x or 0X) or oct (prefix 0).
+If mask is specified value will be logically ANDed with mask.
+This option is intended to be used with a repeat policy. 
+Default is 0 (don't mark).
+.TP
+\fB\-t\fR, \fB\-\-target\fR=\fBaccept\fR|\fBdrop\fR|\fBrepeat\fR
+target for packets that match rule. This option allows to specify 
+how packets that match rules are handled. If this option is used it
+overrides the target specified in dat or ipl files. Default is drop.
+.TP
+\fB\-T\fR, \fB\-\-target-mark\fR=\fIvalue[/mask]\fR
+mark packets with a value. Same as the policy-mark option but for 
+packets that match rules.  Default is 0 (don't mark).
+.TP
+\fB\-n\fR, \fB\-\-queue\-num\fR=\fI0\-65535\fR
+iptables queue number. There is a same option for iptables. 
+Default is 0.
+.TP
+\fB\-i\fR, \fB\-\-insert\fR
+insert a new queue. This option allows to use more than one
+queue and to have different files with different targets 
+associated with one queue.
+.TP
+\fB\-d\fR, \fB\-\-delete\fR
+delete an existing queue by number 
+.TP
+\fB\-s\fR, \fB\-\-show\fR
+show current queues and exit
+.TP
+\fB\-\-strict\-ip\fR
+IP-addresses can be in hex, oct and dec. E.g: 192.0xff.010
+would be an allowed IP-address where the first part is dec, 
+the second is hex, the third is oct. Without this option
+all IP-addresses must be in decimal notation.
+.TP
+\fB\-r\fR, \fB\-\-pid\-file\fR=\fIfile\fR
+specify PID file location. Default is /var/run/iplist.pid when
+the uid is root otherwise /tmp/iplist.pid is used.
+.TP
+\fB\-\-stdout\fR
+log to terminal. Same as --log-file=/dev/stdout.
+.TP
+\fB\-f\fR, \fB\-\-log\-file\fR=\fIfile\fR
+network traffic related output. This option has no effect, if the 
+loglevel option isn't used or has the value none.
+.TP
+\fB\-l\fR, \fB\-\-log\-level\fR=\fBall\fR|\fBmatch\fR|\fBnone\fR
+specify network traffic loglevel. If the verbose option is used, 
+it will print detailed packet information. Default is none.
+.TP
+\fB\-o\fR, \fB\-\-output\fR=\fIfile\fR
+convert files to another format and exit. The output will be
+gzip compressed. 
+.TP
+\fB\-O\fR, \fB\-\-output\-fmt\fR=\fBipl\fR|\fBdat\fR|\fBp2p\fR
+specify output format. Default is ipl binary format.
+.TP
+\fB\-d\fR, \fB\-\-daemon\fR
+start as daemon in background. Note that only one instance of 
+iplist is possible.
+.TP
+\fB\-k\fR, \fB\-\-kill\fR
+kill running iplist instance and exit. This option kills iplist 
+whether it runs as a daemon or in foreground.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+increase verbosity. Shows detail information about the program and the 
+network activities. 
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+suppress non-error messages. iplist uses syslog. If this 
+option is used only errors will be logged to syslog.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+display this help and exit
+.TP
+\fB\-V\fR, \fB\-\-version\fR
+output version information and exit
+.PP
+Supported file formats: p2p, dat, csv and ipl. Use "-" to read from stdin.
+Files can optionally be compressed with gzip.
+.SH ENVIRONMENT
+.TP
+IPLIST_LISTDIR
+If IPLIST_LISTDIR is set, it specifies a directory to look for list
+files. 
+.SH EXAMPLES
+.TP
+1. Using repeat policy
+The policies ACCEPT and DROP are terminating the traversal 
+of packets through the firewall. Sometimes however it is 
+desired to let the packet through iplist so that other
+iptables rules can be applied. This is achieved by marking
+and repeating packets. This is an often used method in IPSEC-setups.
+
+The idea is to send packets that are not marked with a policy-mark 
+to iplist. If a packet doesn't match any IP-addresses, iplist
+marks and repeats it to the source chain.
+
+This rule would send every packet which isn't marked with a policy-mark
+to iplist
+
+#> iptables -I INPUT -m mark ! --mark 1 -j NFQUEUE
+
+iplist would then be started like this
+
+#> iplist --policy repeat --policy-mark 1 --target drop file.p2p
+
+The result of this setup is that any incoming packets that match 
+IP-addresses in file.p2p are dropped, everything else is handled by the 
+rest of the iptables configuration.
+.TP
+2. Blocking specific P2P traffic 
+Let's say a P2P application listens on ports 6991 - 6999.
+The goal is not to allow connections with all clients from 
+a bad.p2p file. Inserting the following rule into iptables
+would block in- and outcoming packets that attempt to establish
+a new conncection.
+
+#> iptables -I INPUT -p tcp -m state --state NEW --dport 6991:6999 -j NFQUEUE
+.br
+#> iptables -I OUTPUT -p tcp -m state --state NEW --sport 6991:6999 -j NFQUEUE
+
+Then iplist can be started like this
+
+#> iplist -p accept -t drop --stdout -l match bad.p2p
+
+All packets that are dropped are logged and printed to the terminal.
+.TP
+3. Rejecting Packtes
+Rejecting packets is done using the repeat option like in example 1.
+Target matches are marked with target-mark and repeated. The result
+is that the iptables rule with "--mark <target-mark>" can be applied.
+
+#> iptables -I INPUT 1 -m mark --mark 2 -j REJECT
+.br
+#> iptables -I INPUT 2 -m mark ! --mark 1 -j NFQUEUE
+
+#> iplist -p repeat -P 1 -t repeat --target-mark 2 bad.p2p
+
+The order of the iptables rules is important. The reject rule must be
+first.
+.SH AUTHOR
+Written by Serkan Sakar.
+.SH "REPORTING BUGS"
+Report bugs to <uljanow@users.sourceforge.net>
+or on https://sourceforge.net/tracker/?atid=966442&group_id=198679
+.SH COPYRIGHT
+Copyright \(co 2009 Serkan Sakar <uljanow@users.sourceforge.net>
+.br
+This is free software.  You may redistribute copies of it under the terms 
+of the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.
+There is NO WARRANTY, to the extent permitted by law.
+
