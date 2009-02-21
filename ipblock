@@ -390,6 +390,16 @@ case "$VERBOSE" in
 	VERBOSE="-v";;
 esac
 
+case "$LESS_MEMORY" in
+[Nn]*|"")
+	;;
+*)
+	QUEUE_INPUT=${QUEUE}
+	QUEUE_OUTPUT=${QUEUE}
+	QUEUE_FORWARD=${QUEUE}	
+	;;
+esac
+
 while getopts "sdripucglvh" opt; do
 	case "$opt" in
 	s) 
