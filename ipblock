@@ -54,8 +54,8 @@ export http_proxy
 
 on_start_failure()
 {
-  logger -s -t "ipblock[$$]" "error: failed to start, cleaning up"
-  do_stop
+	logger -s -t "ipblock[$$]" "error: failed to start, cleaning up"
+	do_stop
 }
 
 is_running()
@@ -370,8 +370,8 @@ do_convert()
 }
 
 if [ "$(id -u)" != "0" ]; then
-  logger -s -t "ipblock[$$]" "error: IPblock needs to be run as root"
-  exit 1
+	logger -s -t "ipblock[$$]" "error: IPblock needs to be run as root"
+	exit 1
 fi
 
 [ "$#" -ne "0" ] || { show_usage >&2 ; exit 1; }
