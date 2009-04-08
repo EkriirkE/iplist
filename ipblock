@@ -211,13 +211,13 @@ insert_rules()
 			;;
 		OUTPUT)
 			for range in $(zcat -fq ${ALLOW_LIST} ${ALLOW_LIST_OUTPUT} /dev/null | \
-					sed 's/[ \t]*//g' | grep -o -E "([0-9.]+){4}[-]([0-9.]+){4}"); do
+					sed 's/[ \t]*//g' | grep -o -E "([0-9.]+)[-]([0-9.]+)"); do
 				iptables -A ${chain}_QUEUE -m iprange --dst-range ${range} -j ALLOW_MATCH
 			done
 			;;
 		FORWARD)
 			for range in $(zcat -fq ${ALLOW_LIST} ${ALLOW_LIST_FORWARD} /dev/null | \
-					sed 's/[ \t]*//g' | grep -o -E "([0-9.]+){4}[-]([0-9.]+){4}"); do
+					sed 's/[ \t]*//g' | grep -o -E "([0-9.]+)[-]([0-9.]+)"); do
 				iptables -A ${chain}_QUEUE -m iprange --src-range ${range} -j ALLOW_MATCH
 				iptables -A ${chain}_QUEUE -m iprange --dst-range ${range} -j ALLOW_MATCH
 			done

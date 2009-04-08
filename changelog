@@ -2,6 +2,8 @@
 
 	* release (0.26)
 	* fixed broken LESS_MEMORY option
+	* fixed regex bug (2683790) due to latest grep 2.5.4
+	* fixed if-up script warning due to exit code
 	* 
 
 2009-02-19  Serkan Sakar <uljanow@users.sourceforge.net>
