@@ -33,17 +33,17 @@ esac
 case "$1" in
 start)
 	log_daemon_msg "Starting $DESC" "ipblock"
-	ipblock -s &
+	ipblock -s 
 	log_end_msg $?
 	;;
 stop)
 	log_daemon_msg "Stopping $DESC" "ipblock"
-	ipblock -d &
+	ipblock -d 
 	log_end_msg $?
 	;;
 restart|reload|force-reload)
 	log_daemon_msg "Restarting $DESC" "ipblock"
-	ipblock -r &
+	ipblock -r 
 	log_end_msg $?
 	;;
 status)
