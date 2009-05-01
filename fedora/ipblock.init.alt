@@ -23,32 +23,31 @@ SCRIPTNAME=/etc/init.d/ipblock
 
 . /etc/init.d/functions
 
+RETVAL=0
+
 case "$AUTOSTART" in
 [Nn]*|"")
-	exit 0
+	exit $RETVAL
 	;;
 esac
 
 case "$1" in
 start)
 	echo -n "Starting $DESC: "
-	ipblock -s &
-	success
-	echo
+	ipblock -s 
+	RETVAL=$?
 	touch /var/lock/subsys/ipblock
 	;;
 stop)
 	echo -n "Stopping $DESC: "
-	ipblock -d &
-	success
-	echo
+	ipblock -d 
+	RETVAL=$?
 	rm -f /var/lock/subsys/ipblock
 	;;
 restart|reload|force-reload)
 	echo -n "Restarting $DESC: "
-	ipblock -r &
-	success
-	echo
+	ipblock -r 
+	RETVAL=$?
 	;;
 status)
 	ipblock -l
@@ -59,4 +58,4 @@ status)
 	;;
 esac
 
-exit 0
+exit $RETVAL
