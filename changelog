@@ -1,4 +1,4 @@
-2009-XX-XX  Serkan Sakar <uljanow@users.sourceforge.net>
+2009-05-01  Serkan Sakar <uljanow@users.sourceforge.net>
 
 	* release (0.26)
 	* fixed broken LESS_MEMORY option
@@ -9,7 +9,6 @@
 	* improved kde support
 	* added generic su-to-root wrapper to ipblock
 	* removed dependencies on desktop-environments
-	* 
 
 2009-02-19  Serkan Sakar <uljanow@users.sourceforge.net>
 
