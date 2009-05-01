@@ -32,21 +32,21 @@ esac
 case "$1" in
 start)
 	echo -n "Starting $DESC: "
-	ipblock -s &
+	ipblock -s 
 	success
 	echo
 	touch /var/lock/subsys/ipblock
 	;;
 stop)
 	echo -n "Stopping $DESC: "
-	ipblock -d &
+	ipblock -d 
 	success
 	echo
 	rm -f /var/lock/subsys/ipblock
 	;;
 restart|reload|force-reload)
 	echo -n "Restarting $DESC: "
-	ipblock -r &
+	ipblock -r 
 	success
 	echo
 	;;

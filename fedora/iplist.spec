@@ -2,7 +2,7 @@ Summary: List based packet handler
 Name: iplist
 Vendor: Serkan Sakar <uljanow@users.sourceforge.net>
 Packager: Serkan Sakar <uljanow@users.sourceforge.net>
-Version: 0.25
+Version: 0.26
 Release: 0.fedora10
 Source0: %{name}-%{version}.tar.gz
 License: GPLv2+

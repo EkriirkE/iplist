@@ -1,4 +1,4 @@
-iplist (0.25-0ubuntu1) intrepid; urgency=low
+iplist (0.26-0ubuntu1) intrepid; urgency=low
 
   * Initial release. (LP: #294838)
 

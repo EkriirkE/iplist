@@ -2,7 +2,7 @@ Summary: List based packet handler
 Name: iplist
 Vendor: Serkan Sakar <uljanow@users.sourceforge.net>
 Packager: Serkan Sakar <uljanow@users.sourceforge.net>
-Version: 0.25
+Version: 0.26
 Release: 0.suse%{suse_version}
 Source0: %{name}-%{version}.tar.gz
 License: GPLv2+
@@ -68,7 +68,7 @@ install -p -m 755 suse/Z-ipblock \
 install -p -m 644 ipblock.png \
 	${RPM_BUILD_ROOT}/usr/share/pixmaps/ipblock.png
 
-%suse_update_desktop_file -c ipblock IPblock "IP Blocker" "gnomesu /usr/sbin/ipblock gui" ipblock System Monitor GTK System Network
+%suse_update_desktop_file -c ipblock IPblock "IP Blocker" "/usr/sbin/ipblock gui" ipblock System Monitor GTK System Network
 export NO_BRP_CHECK_BYTECODE_VERSION=true
 
 install -p -m 644 iplist.8 ${RPM_BUILD_ROOT}/%{_mandir}/man8/

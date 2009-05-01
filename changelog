@@ -5,6 +5,10 @@
 	* fixed regex bug (2683790) due to latest grep 2.5.4
 	* fixed if-up script warning due to exit code
 	* fixed autostart bug in ubuntu jaunty
+	* added theme option to GUI
+	* improved kde support
+	* added generic su-to-root wrapper to ipblock
+	* removed dependencies on desktop-environments
 	* 
 
 2009-02-19  Serkan Sakar <uljanow@users.sourceforge.net>

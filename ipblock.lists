@@ -27,7 +27,7 @@ dshield.gz		http://www.bluetack.co.uk/config/dshield.gz
 hijacked.gz		http://www.bluetack.co.uk/config/hijacked.gz
 
 # malicious p2p peers
-templist.gz		http://www.bluetack.co.uk/config/templist.gz
+badpeers.gz		http://www.bluetack.co.uk/config/templist.gz
 
 # Educational institutions / Universities
 edu.gz			http://iplist.sf.net/lists/edu.gz.php

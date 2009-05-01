@@ -25,7 +25,7 @@ set -u
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
-VERSION="0.25"
+VERSION="0.26"
 
 QUEUE=0xff
 QUEUE_INPUT=0xfd
@@ -328,6 +328,37 @@ do_update()
 
 do_gui()
 {
+	if [ $(id -u) -eq 0 ]; then
+		start_gui
+	fi
+
+	if [ -x /usr/bin/gksu ]; then 
+		exec gksu "/usr/sbin/ipblock start_gui"
+	fi
+
+	if [ -x /usr/bin/kdesudo ]; then
+		exec kdesudo "/usr/sbin/ipblock start_gui"
+	fi
+
+	if [ -x /usr/bin/gnomesu ]; then
+		exec gnomesu "/usr/sbin/ipblock start_gui"
+	fi
+
+	if [ -x /usr/bin/kdesu ]; then
+		exec kdesu "/usr/sbin/ipblock start_gui"
+	fi
+
+	if [ -x /usr/bin/sudo ]; then
+		exec sudo "/usr/sbin/ipblock start_gui"
+	fi
+
+	logger -s -t "ipblock[$$]" "error: not root and can't find su-to-root command."
+	exit 1
+}
+
+
+start_gui()
+{
 	exec java -jar /usr/share/java/ipblockUI.jar > ${GUI_LOG_FILE} 2>&1
 }
 
@@ -369,10 +400,13 @@ do_convert()
 	fi
 }
 
-if [ "$(id -u)" != "0" ]; then
-	logger -s -t "ipblock[$$]" "error: IPblock needs to be run as root"
-	exit 1
-fi
+check_root()
+{
+	if [ $(id -u) -ne 0 ]; then
+		logger -s -t "ipblock[$$]" "error: IPblock needs to be run as root"
+		exit 1
+	fi
+}
 
 [ "$#" -ne "0" ] || { show_usage >&2 ; exit 1; }
 
@@ -401,6 +435,7 @@ case "$LESS_MEMORY" in
 esac
 
 while getopts "sdripucglvh" opt; do
+	[ "$opt" != "g" ] && check_root
 	case "$opt" in
 	s) 
 		do_start
@@ -467,7 +502,7 @@ status)
 gui)
 	$0 -g
 	;; 
-is_running|check_stamp)
+is_running|check_stamp|start_gui)
 	$1
 	;;
 *)
