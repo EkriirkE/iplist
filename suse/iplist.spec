@@ -38,42 +38,29 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 
-mkdir -p ${RPM_BUILD_ROOT}/usr/sbin/
-mkdir -p ${RPM_BUILD_ROOT}/usr/bin/
-mkdir -p ${RPM_BUILD_ROOT}/%{_sysconfdir}/
-mkdir -p ${RPM_BUILD_ROOT}/%{_sysconfdir}/cron.daily/
-mkdir -p ${RPM_BUILD_ROOT}/%{_sysconfdir}/pam.d/
-mkdir -p ${RPM_BUILD_ROOT}/%{_sysconfdir}/security/console.apps/
-mkdir -p ${RPM_BUILD_ROOT}/%{_sysconfdir}/sysconfig/network/if-up.d/
-mkdir -p ${RPM_BUILD_ROOT}/%{_initrddir}/
-mkdir -p ${RPM_BUILD_ROOT}/usr/share/java/
-mkdir -p ${RPM_BUILD_ROOT}/usr/share/applications/
-mkdir -p ${RPM_BUILD_ROOT}/usr/share/pixmaps/
-mkdir -p ${RPM_BUILD_ROOT}/%{_mandir}/man8/
-mkdir -p ${RPM_BUILD_ROOT}/var/cache/iplist/
-
-
-install -p -m 644 ipblock.conf \
+install -D -p -m 644 ipblock.conf \
 	${RPM_BUILD_ROOT}/%{_sysconfdir}/ipblock.conf
-install -p -m 644 ipblock.lists \
+install -D -p -m 644 ipblock.lists \
 	${RPM_BUILD_ROOT}/%{_sysconfdir}/ipblock.lists
-install -p -m 755 suse/ipblock.init \
+install -D -p -m 755 suse/ipblock.init \
 	${RPM_BUILD_ROOT}/%{_initrddir}/ipblock
-install -p -m 755 debian/ipblock.cron.daily \
+install -D -p -m 755 debian/ipblock.cron.daily \
 	${RPM_BUILD_ROOT}/%{_sysconfdir}/cron.daily/ipblock
-install -p -m 755 suse/Z-ipblock \
+install -D -p -m 755 suse/Z-ipblock \
 	${RPM_BUILD_ROOT}/%{_sysconfdir}/sysconfig/network/if-up.d/Z-ipblock
-#install -p -m 644 suse/ipblock.desktop \
+#install -D -p -m 644 suse/ipblock.desktop \
 #	${RPM_BUILD_ROOT}/usr/share/applications/ipblock.desktop
-install -p -m 644 ipblock.png \
+install -D -p -m 644 ipblock.png \
 	${RPM_BUILD_ROOT}/usr/share/pixmaps/ipblock.png
 
+mkdir -p ${RPM_BUILD_ROOT}/usr/share/applications/
 %suse_update_desktop_file -c ipblock IPblock "IP Blocker" "/usr/sbin/ipblock gui" ipblock System Monitor GTK System Network
+
 export NO_BRP_CHECK_BYTECODE_VERSION=true
 
-install -p -m 644 iplist.8 ${RPM_BUILD_ROOT}/%{_mandir}/man8/
-install -p -m 644 ipblock.8 ${RPM_BUILD_ROOT}/%{_mandir}/man8/
-install -p -m 644 allow.p2p ${RPM_BUILD_ROOT}/var/cache/iplist/
+install -D -p -m 644 iplist.8 ${RPM_BUILD_ROOT}/%{_mandir}/man8/iplist.8
+install -D -p -m 644 ipblock.8 ${RPM_BUILD_ROOT}/%{_mandir}/man8/ipblock.8
+install -D -p -m 644 allow.p2p ${RPM_BUILD_ROOT}/var/cache/iplist/allow.p2p
 
 make DESTDIR=$RPM_BUILD_ROOT install
 
