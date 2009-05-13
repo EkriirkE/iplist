@@ -53,9 +53,9 @@ range.o: range.h
 log.o: log.h nfq.h range.h iplist.h
 
 install:
-	install -p -m 755 $(FILENAME) $(DESTDIR)/usr/sbin/
-	install -p -m 755 ipblock $(DESTDIR)/usr/sbin/
-	install -p -m 644 ipblockUI.jar $(DESTDIR)/usr/share/java/
+	install -D -p -m 755 $(FILENAME) $(DESTDIR)/usr/sbin/${FILENAME}
+	install -D -p -m 755 ipblock $(DESTDIR)/usr/sbin/ipblock
+	install -D -p -m 644 ipblockUI.jar $(DESTDIR)/usr/share/java/ipblockUI.jar
 
 deb:
 	dpkg-buildpackage -rfakeroot -tc -D -us -uc
