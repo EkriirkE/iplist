@@ -18,7 +18,7 @@ $ tar fxz iplist-<version>.tar.gz
 $ cd iplist*
 $ make
 
-To build ipblockUI.jar Netbeans is required.
+To build ipblockUI.jar netbeans and java-1.6 are required.
 
 This iplist source tarball comes with a debian directory
 that allows to build Debian or Ubuntu Packages. The install
