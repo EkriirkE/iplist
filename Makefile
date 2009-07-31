@@ -33,13 +33,13 @@ VPATH = $(SRCDIR) $(HEADERDIR)
 vpath %.cc $(SRCDIR)
 vpath %.h $(HEADERDIR)
 
-LIBS = -lnetfilter_queue -lnfnetlink -lpthread -lz
+LIBS = -lnetfilter_queue -lnfnetlink -lpthread -lz -lpcreposix
 FILENAME := iplist
 
 all: $(FILENAME)
 
 $(FILENAME): $(OBJECTS)
-	$(CPP) $(CPPFLAGS) $(INCLUDE) $(OBJECTS) $(LIBS) -o $(FILENAME)
+	$(CPP) $(CPPFLAGS) $(INCLUDE) $(LIBS) ${OBJECTS} -o $(FILENAME)
 	strip $@
 
 %.o: %.cc

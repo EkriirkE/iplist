@@ -1,3 +1,10 @@
+2009-XX-X  Serkan Sakar <uljanow@users.sourceforge.net>
+	
+	* release (0.27)
+	* improved performace of list routines
+	* fixed theme of context menu in whitelist manager
+	* 
+
 2009-05-01  Serkan Sakar <uljanow@users.sourceforge.net>
 
 	* release (0.26)

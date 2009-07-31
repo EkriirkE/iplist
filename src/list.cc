@@ -29,7 +29,7 @@
 #include <tr1/unordered_map>
 
 #include <syslog.h>
-#include <regex.h>
+#include <pcreposix.h>
 #include <zlib.h>
 #include <fcntl.h>
 

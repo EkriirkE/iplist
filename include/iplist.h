@@ -35,7 +35,7 @@ extern "C" {
 
 #include "range.h"
 
-#define VERSION "0.26"
+#define VERSION "0.27"
 
 #define MSGSIZE(msg) (sizeof(msg)-sizeof(long))
 
