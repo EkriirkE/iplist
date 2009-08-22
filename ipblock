@@ -364,10 +364,17 @@ start_gui()
 
 do_status()
 {
-	if is_running; then
-		logger -s -t "ipblock[$$]" "error: IPblock is not running"
-		exit 1
-	fi
+	is_running || {
+		case "$?" in
+		5)
+			;;
+		*)
+			logger -s -t "ipblock[$$]" "error: IPblock is not running"
+			exit 1
+			;;
+		esac
+	}
+
 	iplist -s
 
 	echo
