@@ -4,6 +4,10 @@
 	* improved performace of list routines
 	* fixed theme of context menu in whitelist manager
 	* improved status check routines
+	* changed UI to include a loglevel combobox
+	* added info dialog if log entry is double-clicked
+	* replaced tail dependency
+	* removed GUI_LAST_LOG_LINES option
 	* 
 
 2009-05-01  Serkan Sakar <uljanow@users.sourceforge.net>
