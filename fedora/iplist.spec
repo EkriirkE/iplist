@@ -2,8 +2,8 @@ Summary: List based packet handler
 Name: iplist
 Vendor: Serkan Sakar <uljanow@users.sourceforge.net>
 Packager: Serkan Sakar <uljanow@users.sourceforge.net>
-Version: 0.26
-Release: 0.fedora10
+Version: 0.27
+Release: 0.fedora11
 Source0: %{name}-%{version}.tar.gz
 License: GPLv2+
 Group: Applications/Internet
@@ -16,6 +16,7 @@ BuildRequires: gcc-c++
 BuildRequires: zlib-devel
 BuildRequires: libnfnetlink-devel
 BuildRequires: libnetfilter_queue-devel
+BuildRequires: pcre-devel
 #BuildRequires: java-devel >= 1.6
 
 %description

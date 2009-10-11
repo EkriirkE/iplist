@@ -21,6 +21,7 @@ BuildRequires: libnetfilter_queue1-devel
 BuildRequires: update-desktop-files
 BuildRequires: fastjar
 BuildRequires: sysconfig
+BuildRequires: pcre-devel
 #BuildRequires: java-devel >= 1.6
 
 %description
