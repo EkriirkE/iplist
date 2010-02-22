@@ -50,13 +50,14 @@ binary-arch: build install
 #	dh_installlogrotate
 	dh_installinit --no-start --name=ipblock --  start 99 2 3 4 5 . stop 00 0 1 6 .
 	dh_installcron --name=ipblock
+	dh_installifupdown --name=ipblock
 	dh_installman
 	dh_link
 	dh_strip
 	dh_compress
 	dh_desktop
 	dh_icons
-	dh_fixperms --exclude 99ipblock
+	dh_fixperms 
 #	dh_makeshlibs
 	dh_installdeb
 	dh_shlibdeps
