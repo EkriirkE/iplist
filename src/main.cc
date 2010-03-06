@@ -1,6 +1,6 @@
 /*
 	iplist - List based packet handler
-	Copyright (C) 2009 Serkan Sakar <uljanow@users.sourceforge.net>
+	Copyright (C) 2010 Serkan Sakar <uljanow@users.sourceforge.net>
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -135,6 +135,7 @@ int main(int argc, char** argv)
 								j->target_mark));
 					j->read_files(rset.get(), log::loglevel & LOG_NONE);
 					j->range_size = rset->size();
+					j->ipcount = rset->get_ipcount();
 					range_map[j->nfq_num] = rset;
 					job_map[j->nfq_num] = j;
 				} else {
@@ -162,7 +163,7 @@ int main(int argc, char** argv)
 					throw std::ios_base::failure("can't open pipe write-only");
 
 				std::string head = (job_map.empty()) ? "No queues inserted\n" : 
-						"Queue\tPolicy (mark)\tRanges\tTarget (mark)\tFile\n";
+						"Queue\tPolicy (mark)\tIP count\tRanges\tTarget (mark)\tFile\n";
 
 				if (write(fd, head.c_str(), head.size()) == -1)
 					throw std::ios_base::failure(strerror(errno));

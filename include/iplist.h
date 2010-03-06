@@ -1,6 +1,6 @@
 /*
 	iplist - List based packet handler
-	Copyright (C) 2009 Serkan Sakar <uljanow@users.sourceforge.net>
+	Copyright (C) 2010 Serkan Sakar <uljanow@users.sourceforge.net>
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ extern "C" {
 
 #include "range.h"
 
-#define VERSION "0.27"
+#define VERSION "0.28"
 
 #define MSGSIZE(msg) (sizeof(msg)-sizeof(long))
 
@@ -85,7 +85,8 @@ namespace iplist {
 		int8_t policy;
 		uint32_t policy_mark,
 				 target_mark,
-				 range_size;
+				 range_size,
+				 ipcount;
 		pthread_t tid;	// worker_th
 		pid_t pid;		// pid of sender
 

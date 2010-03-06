@@ -1,6 +1,6 @@
 /*
 	iplist - List based packet handler
-	Copyright (C) 2009 Serkan Sakar <uljanow@users.sourceforge.net>
+	Copyright (C) 2010 Serkan Sakar <uljanow@users.sourceforge.net>
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ bool range::range_cmp::operator()(const range::range& lhs, const range::range& r
 }
 
 range::range_set::range_set(uint16_t n, uint16_t p, uint32_t pm, uint32_t tm):
-	nfq_num(n), policy(p), policy_mark(pm), target_mark(tm)
+	nfq_num(n), policy(p), policy_mark(pm), target_mark(tm), ipcount(0)
 {}
 
 std::pair<range::range_set::iterator, bool> range::range_set::insert(const range& rhs)
@@ -84,6 +84,13 @@ std::pair<range::range_set::iterator, bool> range::range_set::insert(const range
 	assert(lower_bound(r.addr.first) == end() || 
 			r.addr.second < lower_bound(r.addr.first)->addr.first);
 
+	ipcount += r.addr.second - r.addr.first + 1; 
+
 	return std::set<range, range_cmp>::insert(r);
+}
+
+size_t range::range_set::get_ipcount() const
+{
+	return ipcount;
 }
 

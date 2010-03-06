@@ -1,6 +1,6 @@
 /*
 	iplist - List based packet handler
-	Copyright (C) 2009 Serkan Sakar <uljanow@users.sourceforge.net>
+	Copyright (C) 2010 Serkan Sakar <uljanow@users.sourceforge.net>
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -62,13 +62,15 @@ namespace range {
 		uint16_t nfq_num;
 		int8_t policy;
 		uint32_t policy_mark, 
-				 target_mark;
+				 target_mark,
+				 ipcount;
 
 		range_set() {}
 		range_set(uint16_t, uint16_t, uint32_t, uint32_t);
 		~range_set() {}
 
 		std::pair<iterator, bool> insert(const range&);
+		size_t get_ipcount() const;
 	};
 
 	typedef range_set range_set_t;

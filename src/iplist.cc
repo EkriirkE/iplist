@@ -1,6 +1,6 @@
 /*
 	iplist - List based packet handler
-	Copyright (C) 2009 Serkan Sakar <uljanow@users.sourceforge.net>
+	Copyright (C) 2010 Serkan Sakar <uljanow@users.sourceforge.net>
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ const mode_t MODE = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 static std::ostream& print_version(std::ostream& os)
 {
 	return os << "iplist " << VERSION << 
-		"\nCopyright (C) 2009 Serkan Sakar <uljanow@users.sourceforge.net>" 
+		"\nCopyright (C) 2010 Serkan Sakar <uljanow@users.sourceforge.net>" 
 		<< std::endl;
 }
 
@@ -494,7 +494,7 @@ void* iplist::sighandler_start(void*)
 iplist::job::job():
 	mtype(JOB), req(INSERT), file_count(0), nfq_num(NFQ_NUM), 
 	policy(POLICY), policy_mark(POLICY_MARK), target_mark(TARGET_MARK),
-	range_size(0), tid(0), pid(0)
+	range_size(0), ipcount(0), tid(0), pid(0)
 {}
 
 void iplist::job::add_file(const char* f, int8_t t) 
@@ -531,14 +531,14 @@ std::string iplist::job::to_string() const
 	target_str[NF_REPEAT] = "REPEAT";
 
 	os << nfq_num << "\t" << target_str[policy] << " (" 
-		<< uint32_t(policy_mark) << ")\t" << range_size << "\t";
+		<< uint32_t(policy_mark) << ")\t" << ipcount << "\t" << range_size << "\t";
 
 	if (file_count > 0)
 		os << target_str[target[0]] << " (" << uint32_t(target_mark) 
 			<< ")\t" << file[0] << "\n";
 
 	for (uint8_t i = 1; i < file_count; i++)
-		os << "\t\t\t\t" << target_str[target[i]] << " (" 
+		os << "\t\t\t\t\t\t" << target_str[target[i]] << " (" 
 			<< uint32_t(target_mark) << ")\t" << file[i] << "\n";
 
 	return os.str();
