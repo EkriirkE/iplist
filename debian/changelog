@@ -1,4 +1,4 @@
-iplist (0.27-0ubuntu1) intrepid; urgency=low
+iplist (0.28-0ubuntu1) karmic; urgency=low
 
   * Initial release. (LP: #294838)
 

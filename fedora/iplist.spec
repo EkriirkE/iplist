@@ -11,6 +11,7 @@ URL: http://iplist.sourceforge.net
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}
 #Requires: libnfnetlink
 #Requires: libnetfilter_queue
+Requires: wget
 Requires: java >= 1.6
 BuildRequires: gcc-c++
 BuildRequires: zlib-devel
