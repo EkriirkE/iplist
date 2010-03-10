@@ -4,6 +4,7 @@ The following  dev-packages are needed:
  * g++
  * libnetfilter-queue-dev
  * zlib1g-dev
+ * libpcre3-dev
 
 These names refer to packages found on Debian based systems.
 On Fedora the names are:
@@ -11,6 +12,7 @@ On Fedora the names are:
  * gcc-c++
  * libnetfilter_queue-devel 
  * zlib-devel 
+ * pcre-devel 
 
 To build iplist run
 
@@ -31,9 +33,8 @@ $ tar fxz iplist-<version>.tar.gz
 $ cd iplist*
 $ make deb
 
-To build Fedora Core or OpenSuSE packages copy the source tarball to 
-/usr/src/*/SOURCES and use the iplist.spec file which
-is in the source tree.
+To build Fedora or OpenSuSE packages copy the source tarball to 
+/usr/src/*/SOURCES and use the iplist.spec file in the source tree.
 
 # cp iplist-<version>.tar.gz /usr/src/*/SOURCES
 # rpmbuild -ba iplist.spec
