@@ -2,7 +2,7 @@ Summary: List based packet handler
 Name: iplist
 Vendor: Serkan Sakar <uljanow@users.sourceforge.net>
 Packager: Serkan Sakar <uljanow@users.sourceforge.net>
-Version: 0.27
+Version: 0.28
 Release: 0.suse%{suse_version}
 Source0: %{name}-%{version}.tar.gz
 License: GPLv2+
@@ -14,6 +14,7 @@ BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}
 Requires: java >= 1.6
 Requires: sysconfig
 Requires: cron
+BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: zlib-devel
 BuildRequires: libnfnetlink0-devel
@@ -34,6 +35,7 @@ thousands of IP-address ranges.
 %setup -q
 
 %build
+export SUSE_ASNEEDED=0
 make
 
 %install
