@@ -51,7 +51,7 @@ inline bool range::range::contains(const range& rhs) const
 } 
 
 // stl_set equal : if (!(range_cmp(lhs,rhs) || range_cmp(rhs,lhs)))
-bool range::range_cmp::operator()(const range::range& lhs, const range::range& rhs) const
+bool range::range_cmp::operator()(const ::range::range& lhs, const ::range::range& rhs) const
 { // strict weak ordering
 	return (lhs == rhs) ? false : lhs < rhs;
 }
