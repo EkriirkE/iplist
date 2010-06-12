@@ -34,6 +34,8 @@
 #include <syslog.h>
 #include <fcntl.h>
 #include <sys/resource.h>
+#include <sys/types.h> 
+#include <sys/stat.h> 
 
 #include "iplist.h"
 #include "list.h"
