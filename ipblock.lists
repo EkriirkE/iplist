@@ -2,23 +2,23 @@
 #<file>			<url>
 
 # Anti-P2P/GOV/MIL 
-level1.gz		http://iplist.sf.net/lists/level1.gz.php
+level1.gz		http://www.bluetack.co.uk/config/level1.gz
 
 # Corporations
 level2.gz		http://www.bluetack.co.uk/config/level2.gz
 level3.gz		http://www.bluetack.co.uk/config/level3.gz
 
 # ad-, spy- and malware 
-ads-trackers-and-bad-pr0n.gz	http://iplist.sf.net/lists/ads-trackers-and-bad-pr0n.gz.php
+ads-trackers-and-bad-pr0n.gz	http://www.bluetack.co.uk/config/ads-trackers-and-bad-pr0n.gz
 trojan.gz		http://www.bluetack.co.uk/config/trojan.gz
 Microsoft.gz	http://www.bluetack.co.uk/config/Microsoft.gz
-spyware.gz		http://iplist.sf.net/lists/spyware.gz.php
+spyware.gz		http://www.bluetack.co.uk/config/spyware.gz
 
 # spider/bot-networks
 spider.gz		http://www.bluetack.co.uk/config/spider.gz
 
 # Spoofed IP-addresses 
-bogon.gz		http://iplist.sf.net/lists/bogon.gz.php
+bogon.gz		http://www.bluetack.co.uk/config/bogon.gz
 
 # known cracker IP-addresses
 dshield.gz		http://www.bluetack.co.uk/config/dshield.gz
@@ -30,7 +30,7 @@ hijacked.gz		http://www.bluetack.co.uk/config/hijacked.gz
 badpeers.gz		http://www.bluetack.co.uk/config/templist.gz
 
 # Educational institutions / Universities
-edu.gz			http://iplist.sf.net/lists/edu.gz.php
+edu.gz			http://www.bluetack.co.uk/config/edu.gz
 
 # IANA lists
 iana-multicast.gz	http://www.bluetack.co.uk/config/iana-multicast.gz
@@ -51,29 +51,29 @@ nipfilter.dat.gz	http://www.bluetack.co.uk/config/nipfilter.dat.gz
 pipfilter.dat.gz	http://www.bluetack.co.uk/config/pipfilter.dat.gz
 
 # countries
-austria.p2p.gz		http://iplist.sf.net/countries/austria.php
-belgium.p2p.gz		http://iplist.sf.net/countries/belgium.php
-china.p2p.gz		http://iplist.sf.net/countries/china.php
-finland.p2p.gz		http://iplist.sf.net/countries/finland.php
-france.p2p.gz		http://iplist.sf.net/countries/france.php
-gbr.p2p.gz			http://iplist.sf.net/countries/gbr.php
-germany.p2p.gz		http://iplist.sf.net/countries/germany.php
-greece.p2p.gz		http://iplist.sf.net/countries/greece.php
-italy.p2p.gz		http://iplist.sf.net/countries/italy.php
-japan.p2p.gz		http://iplist.sf.net/countries/japan.php
-netherlands.p2p.gz	http://iplist.sf.net/countries/netherlands.php
-portugal.p2p.gz		http://iplist.sf.net/countries/portugal.php
-spain.p2p.gz		http://iplist.sf.net/countries/spain.php
-sweden.p2p.gz		http://iplist.sf.net/countries/sweden.php
-switzerland.p2p.gz	http://iplist.sf.net/countries/switzerland.php
-usa.p2p.gz			http://iplist.sf.net/countries/usa.php
-india.p2p.gz		http://iplist.sf.net/countries/india.php
-pakistan.p2p.gz	http://iplist.sf.net/countries/pakistan.php
-canada.p2p.gz		http://iplist.sf.net/countries/canada.php
-kor.p2p.gz			http://iplist.sf.net/countries/kor.php
-ireland.p2p.gz		http://iplist.sf.net/countries/ireland.php
-russia.p2p.gz		http://iplist.sf.net/countries/russia.php
-mexico.p2p.gz		http://iplist.sf.net/countries/mexico.php
-brazil.p2p.gz		http://iplist.sf.net/countries/brazil.php
-turkey.p2p.gz		http://iplist.sf.net/countries/turkey.php
+austria.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/austria.gz
+belgium.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/belgium.gz
+china.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/china.gz
+finland.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/finland.gz
+france.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/france.gz
+gbr.p2p.gz			http://user.cs.tu-berlin.de/uljanow/countries/gbr.gz
+germany.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/germany.gz
+greece.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/greece.gz
+italy.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/italy.gz
+japan.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/japan.gz
+netherlands.p2p.gz	http://user.cs.tu-berlin.de/uljanow/countries/netherlands.gz
+portugal.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/portugal.gz
+spain.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/spain.gz
+sweden.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/sweden.gz
+switzerland.p2p.gz	http://user.cs.tu-berlin.de/uljanow/countries/switzerland.gz
+usa.p2p.gz			http://user.cs.tu-berlin.de/uljanow/countries/usa.gz
+india.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/india.gz
+pakistan.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/pakistan.gz
+canada.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/canada.gz
+kor.p2p.gz			http://user.cs.tu-berlin.de/uljanow/countries/kor.gz
+ireland.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/ireland.gz
+russia.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/russia.gz
+mexico.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/mexico.gz
+brazil.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/brazil.gz
+turkey.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/turkey.gz
 

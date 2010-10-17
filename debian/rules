@@ -55,7 +55,6 @@ binary-arch: build install
 	dh_link
 	dh_strip
 	dh_compress
-	dh_desktop
 	dh_icons
 	dh_fixperms 
 #	dh_makeshlibs

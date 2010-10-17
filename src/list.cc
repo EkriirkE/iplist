@@ -122,7 +122,7 @@ void list::read_fmt(const file_fmt& file, std::istream& is,
 			if (rset->insert(r).second) counter++;
 
 		} catch (const std::exception& e) {
-			syslog(LOG_INFO, "info: ignoring faulty line %s at %d\n",
+			syslog(LOG_INFO, "info: ignoring faulty line %s at %lu\n",
 					buffer.c_str(), line);
 		}
 	}

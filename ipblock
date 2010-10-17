@@ -126,7 +126,7 @@ update_file()
 	grep '^[^#]' ${URL_FILE} | \
 	while read file url; do
 		if [ "$file" = "$list" ]; then
-			wget -U "IPblock/$VERSION" -t 2 -T 60 -w 1 -O $file -a ${LOG_FILE} -nv -N ${url} || \
+			wget -U "IPblock/$VERSION" -t 2 -T 60 -w 1 -a ${LOG_FILE} -nv -N ${url} || \
 			logger -s -t "ipblock[$$]" "error: update of $file failed"
 			break
 		fi
