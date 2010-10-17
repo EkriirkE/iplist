@@ -92,7 +92,7 @@ int nfq::nfq_hook::cb(nfq_q_handle* qh, nfgenmsg*, nfq_data* nfa, void* p)
 {
 	int err;
 	uint32_t id;
-	unsigned char* data;
+	char* data;
 	nfqnl_msg_packet_hdr* ph;
 	range::range_set_t::iterator i;
 
@@ -144,7 +144,7 @@ void nfq::nfq_hook::print_pkt(std::string msg, int8_t target,
 		nfq_data* nfa, nfqnl_msg_packet_hdr* ph)
 {
 	packet_msg pkt;
-	unsigned char* data;
+	char* data;
 
 	if (nfq_get_timestamp(nfa, &pkt.tv)) 
 		gettimeofday(&pkt.tv, NULL);
