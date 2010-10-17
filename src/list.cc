@@ -79,46 +79,52 @@ void list::read_fmt(const file_fmt& file, std::istream& is,
 	regcomp(&reg_exp, file.reg_exp[strict_ip], REG_EXTENDED);
 
 	for (u_long line = 1; (std::getline(is, buffer)); line++) {
- 		buffer.erase(std::remove_if(buffer.begin(), buffer.end(), isspace), buffer.end());
+		try {
+			buffer.erase(std::remove_if(buffer.begin(), buffer.end(), isspace), buffer.end());
 
-		if (regexec(&reg_exp, buffer.c_str(), file.match_size, reg_match, 0)) 
-			continue;
+			if (regexec(&reg_exp, buffer.c_str(), file.match_size, reg_match, 0)) 
+				continue;
 
-		range::range r;
-		if (file.number)
-			r.addr = std::make_pair(
-					strtoul(buffer.substr(reg_match[file.start].rm_so, 
-							REG_SIZE(reg_match[file.start])).c_str(), NULL, 0),
-					strtoul(buffer.substr(reg_match[file.end].rm_so,
-							REG_SIZE(reg_match[file.end])).c_str(), NULL, 0));
-		else if (strict_ip) // inet_addr supports different bases
-			r.addr = std::make_pair(
-					ntohl(inet_addr(buffer.substr(reg_match[file.start].rm_so, 
-								REG_SIZE(reg_match[file.start])).c_str())), 
-					ntohl(inet_addr(buffer.substr(reg_match[file.end].rm_so, 
-								REG_SIZE(reg_match[file.end])).c_str())));
-		else
-			r.addr = std::make_pair(
-					str2ip(buffer.substr(reg_match[file.start].rm_so, 
-							REG_SIZE(reg_match[file.start]))),
-					str2ip(buffer.substr(reg_match[file.end].rm_so, 
-							REG_SIZE(reg_match[file.end]))));
+			range::range r;
+			if (file.number)
+				r.addr = std::make_pair(
+						strtoul(buffer.substr(reg_match[file.start].rm_so, 
+								REG_SIZE(reg_match[file.start])).c_str(), NULL, 0),
+						strtoul(buffer.substr(reg_match[file.end].rm_so, 
+								REG_SIZE(reg_match[file.end])).c_str(), NULL, 0));
+			else if (strict_ip) // inet_addr supports different bases
+				r.addr = std::make_pair(
+						ntohl(inet_addr(buffer.substr(reg_match[file.start].rm_so, 
+									REG_SIZE(reg_match[file.start])).c_str())), 
+						ntohl(inet_addr(buffer.substr(reg_match[file.end].rm_so, 
+									REG_SIZE(reg_match[file.end])).c_str())));
+			else 
+				r.addr = std::make_pair(
+						str2ip(buffer.substr(reg_match[file.start].rm_so, 
+								REG_SIZE(reg_match[file.start]))),
+						str2ip(buffer.substr(reg_match[file.end].rm_so, 
+								REG_SIZE(reg_match[file.end]))));
+			
+			if (file.name && !short_fmt)
+				r.name = buffer.substr(reg_match[file.name].rm_so, 
+						REG_SIZE(reg_match[file.name]));
 
-		if (file.name && !short_fmt)
-			r.name = buffer.substr(reg_match[file.name].rm_so, 
-					REG_SIZE(reg_match[file.name]));
+			if (r.addr.first > r.addr.second)
+				syslog(LOG_INFO, "info: swapping ips at line %lu", line);
 
-		if (r.addr.first > r.addr.second)
-			syslog(LOG_INFO, "info: swapping ips at line %lu", line);
+			if (file.target && tgt < 0) {
+				uint8_t t = atoi(buffer.substr(reg_match[file.target].rm_so, 
+							REG_SIZE(reg_match[file.target])).c_str());
+				r.target = (t < 127) ? NF_DROP : NF_ACCEPT;
+			} else if (tgt >= 0)
+				r.target = tgt;
 
-		if (file.target && tgt < 0) {
-			uint8_t t = atoi(buffer.substr(reg_match[file.target].rm_so, 
-						REG_SIZE(reg_match[file.target])).c_str());
-			r.target = (t < 127) ? NF_DROP : NF_ACCEPT;
-		} else if (tgt >= 0)
-			r.target = tgt;
+			if (rset->insert(r).second) counter++;
 
-		if (rset->insert(r).second) counter++;
+		} catch (const std::exception& e) {
+			syslog(LOG_INFO, "info: ignoring faulty line %s at %d\n",
+					buffer.c_str(), line);
+		}
 	}
 	regfree(&reg_exp);
 	syslog(LOG_NOTICE, "info: %lu ip ranges inserted\n", counter);

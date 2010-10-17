@@ -1,3 +1,10 @@
+2010-10-17  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.29)
+	* fixed compiler issues 
+	* faulty lines don't cause an exit
+	* fixed broken file names during update
+
 2010-03-11  Serkan Sakar <uljanow@users.sourceforge.net>
 
 	* release (0.28)

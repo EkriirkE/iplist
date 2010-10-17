@@ -2,7 +2,7 @@ Summary: List based packet handler
 Name: iplist
 Vendor: Serkan Sakar <uljanow@users.sourceforge.net>
 Packager: Serkan Sakar <uljanow@users.sourceforge.net>
-Version: 0.28
+Version: 0.29
 Release: 0.suse%{suse_version}
 Source0: %{name}-%{version}.tar.gz
 License: GPLv2+

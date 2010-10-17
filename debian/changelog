@@ -1,4 +1,4 @@
-iplist (0.28-0ubuntu1) karmic; urgency=low
+iplist (0.29-0ubuntu1) maverick; urgency=low
 
   * Initial release. (LP: #294838)
 
