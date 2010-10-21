@@ -10,7 +10,6 @@ level3.gz		http://www.bluetack.co.uk/config/level3.gz
 
 # ad-, spy- and malware 
 ads-trackers-and-bad-pr0n.gz	http://www.bluetack.co.uk/config/ads-trackers-and-bad-pr0n.gz
-trojan.gz		http://www.bluetack.co.uk/config/trojan.gz
 Microsoft.gz	http://www.bluetack.co.uk/config/Microsoft.gz
 spyware.gz		http://www.bluetack.co.uk/config/spyware.gz
 
@@ -51,29 +50,29 @@ nipfilter.dat.gz	http://www.bluetack.co.uk/config/nipfilter.dat.gz
 pipfilter.dat.gz	http://www.bluetack.co.uk/config/pipfilter.dat.gz
 
 # countries
-austria.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/austria.gz
-belgium.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/belgium.gz
-china.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/china.gz
-finland.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/finland.gz
-france.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/france.gz
-gbr.p2p.gz			http://user.cs.tu-berlin.de/uljanow/countries/gbr.gz
-germany.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/germany.gz
-greece.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/greece.gz
-italy.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/italy.gz
-japan.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/japan.gz
-netherlands.p2p.gz	http://user.cs.tu-berlin.de/uljanow/countries/netherlands.gz
-portugal.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/portugal.gz
-spain.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/spain.gz
-sweden.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/sweden.gz
-switzerland.p2p.gz	http://user.cs.tu-berlin.de/uljanow/countries/switzerland.gz
-usa.p2p.gz			http://user.cs.tu-berlin.de/uljanow/countries/usa.gz
-india.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/india.gz
-pakistan.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/pakistan.gz
-canada.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/canada.gz
-kor.p2p.gz			http://user.cs.tu-berlin.de/uljanow/countries/kor.gz
-ireland.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/ireland.gz
-russia.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/russia.gz
-mexico.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/mexico.gz
-brazil.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/brazil.gz
-turkey.p2p.gz		http://user.cs.tu-berlin.de/uljanow/countries/turkey.gz
+austria.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/austria.p2p.gz
+belgium.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/belgium.p2p.gz
+china.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/china.p2p.gz
+finland.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/finland.p2p.gz
+france.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/france.p2p.gz
+gbr.p2p.gz			http://user.cs.tu-berlin.de/~uljanow/countries/gbr.p2p.gz
+germany.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/germany.p2p.gz
+greece.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/greece.p2p.gz
+italy.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/italy.p2p.gz
+japan.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/japan.p2p.gz
+netherlands.p2p.gz	http://user.cs.tu-berlin.de/~uljanow/countries/netherlands.p2p.gz
+portugal.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/portugal.p2p.gz
+spain.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/spain.p2p.gz
+sweden.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/sweden.p2p.gz
+switzerland.p2p.gz	http://user.cs.tu-berlin.de/~uljanow/countries/switzerland.p2p.gz
+usa.p2p.gz			http://user.cs.tu-berlin.de/~uljanow/countries/usa.p2p.gz
+india.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/india.p2p.gz
+pakistan.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/pakistan.p2p.gz
+canada.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/canada.p2p.gz
+kor.p2p.gz			http://user.cs.tu-berlin.de/~uljanow/countries/kor.p2p.gz
+ireland.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/ireland.p2p.gz
+russia.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/russia.p2p.gz
+mexico.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/mexico.p2p.gz
+brazil.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/brazil.p2p.gz
+turkey.p2p.gz		http://user.cs.tu-berlin.de/~uljanow/countries/turkey.p2p.gz
 

@@ -4,6 +4,7 @@
 	* fixed compiler issues 
 	* faulty lines don't cause an exit
 	* fixed broken file names during update
+	* fixed lintian errors (deb packages)
 
 2010-03-11  Serkan Sakar <uljanow@users.sourceforge.net>
 

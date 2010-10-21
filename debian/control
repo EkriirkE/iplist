@@ -11,7 +11,7 @@ Standards-Version: 3.8.0
 Package: iplist
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, iptables, java6-runtime | default-jre
-Conflicts: moblock
+Conflicts: moblock, pgld
 Description: List based packet handler
  iplist is a list based packet handler which uses
  the netfilter netlink-queue library (kernel 2.6.14 or 
