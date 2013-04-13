@@ -1,4 +1,4 @@
-iplist (0.29-0ubuntu1) maverick; urgency=low
+iplist (0.30-0wheezy1) wheezy; urgency=low
 
   * Initial release. (LP: #294838)
 

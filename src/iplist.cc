@@ -484,7 +484,7 @@ void* iplist::sighandler_start(void*)
 			}
 			pthread_mutex_unlock(&lock);
 		}
-		return (void*)err;
+		return NULL;
 
 	} catch (const std::exception& e) {
 		syslog(LOG_ERR, "thread[%lu]: error: %s\n", pthread_self(), e.what());

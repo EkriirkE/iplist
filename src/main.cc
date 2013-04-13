@@ -33,15 +33,11 @@
 #include "nfq.h"
 #include "log.h"
 
-static long pthread_terminate(pthread_t tid)
+static void pthread_terminate(pthread_t tid)
 {
-	void* ret;
-	
 	pthread_cancel(tid);
-	if (pthread_join(tid, &ret))
+	if (pthread_join(tid, NULL))
 		throw std::runtime_error("can't join thread");
-	
-	return ((long)ret != -1) ? (long)ret : EXIT_SUCCESS;
 }
 
 int main(int argc, char** argv)
@@ -139,7 +135,7 @@ int main(int argc, char** argv)
 					range_map[j->nfq_num] = rset;
 					job_map[j->nfq_num] = j;
 				} else {
-					err += pthread_terminate(i->second->tid);
+					pthread_terminate(i->second->tid);
 
 					j->read_files(range_map[j->nfq_num].get(), log::loglevel & LOG_NONE);
 					i->second->range_size = range_map[j->nfq_num]->size();
@@ -151,7 +147,7 @@ int main(int argc, char** argv)
 				break;
 			case iplist::DELETE:
 				if ((i = job_map.find(j->nfq_num)) != job_map.end()) {
-					err += pthread_terminate(i->second->tid);
+					pthread_terminate(i->second->tid);
 					range_map.erase(i->first);
 					job_map.erase(i);
 				} else
@@ -191,7 +187,7 @@ int main(int argc, char** argv)
 			throw std::runtime_error("can't reset signal mask");
 
 		for (job_map_t::const_iterator i = job_map.begin(); i != job_map.end(); i++)
-			err += pthread_terminate(i->second->tid);
+			pthread_terminate(i->second->tid);
 
 	} catch (const std::exception& e) {
  		syslog(LOG_ERR, "error: %s\n", e.what());

@@ -24,6 +24,7 @@
 #include <map>
 #include <csignal>
 #include <limits.h>
+#include <unistd.h>
 
 #include <sys/msg.h>
 
@@ -35,7 +36,7 @@ extern "C" {
 
 #include "range.h"
 
-#define VERSION "0.29"
+#define VERSION "0.30"
 
 #define MSGSIZE(msg) (sizeof(msg)-sizeof(long))
 

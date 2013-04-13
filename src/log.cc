@@ -41,7 +41,6 @@ uint8_t log::loglevel = 0;
 
 void* ::log::logger_start(void*)
 {
-	int err = EXIT_SUCCESS;
 	try {
 		std::ofstream os(logfile.c_str(), std::ios::app);
 
@@ -117,8 +116,7 @@ void* ::log::logger_start(void*)
 		}
 	} catch (const std::exception& e) {
 		syslog(LOG_ERR, "thread[%lu]: error: %s\n", pthread_self(), e.what());
-		err = EXIT_FAILURE;
 	}
-	return (void*)err;
+	return NULL;
 }
 

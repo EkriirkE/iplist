@@ -183,7 +183,6 @@ void nfq::nfq_hook::print_pkt(std::string msg, int8_t target,
 
 void* nfq::nfq_start(void* p)
 {
-	int err = EXIT_SUCCESS;
 	try {
 		int old_cancel_state;
 		pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, &old_cancel_state);
@@ -197,8 +196,7 @@ void* nfq::nfq_start(void* p)
 	
 	} catch (const std::exception& e) {
 		syslog(LOG_ERR, "thread[%lu]: error: %s\n", pthread_self(), e.what());
-		err = EXIT_FAILURE;
 	}
-	return (void*)err;
+	return NULL;
 }
 
