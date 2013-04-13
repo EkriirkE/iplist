@@ -1,3 +1,9 @@
+2013-04-13  Serkan Sakar <uljanow@users.sourceforge.net>
+
+	* release (0.30)
+	* fixed compiler issues 
+	* fixed thread return value bugs
+
 2010-10-17  Serkan Sakar <uljanow@users.sourceforge.net>
 
 	* release (0.29)

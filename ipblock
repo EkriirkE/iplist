@@ -25,7 +25,7 @@ set -u
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
-VERSION="0.29"
+VERSION="0.30"
 
 QUEUE=0xff
 QUEUE_INPUT=0xfd

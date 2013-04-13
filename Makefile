@@ -22,7 +22,7 @@ CPP = g++
 FLAGS= -Wall -Wextra -std=c++98 -D_REENTRANT
 #CPPFLAGS = ${FLAGS} -g -DDEBUG
 #CPPFLAGS = ${FLAGS} -g -pg -DDEBUG
-CPPFLAGS = -O2 ${FLAGS} -DNDEBUG
+CPPFLAGS = -Os ${FLAGS} -DNDEBUG
 
 HEADERDIR = include
 SRCDIR = src
